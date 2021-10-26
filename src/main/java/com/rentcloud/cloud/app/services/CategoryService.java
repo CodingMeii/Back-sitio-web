@@ -73,8 +73,8 @@ public class CategoryService {
                     existCategory.get().setName(category.getName());
                 }
                 
-                if(category.getDescripcion()!=null){
-                    existCategory.get().setDescripcion(category.getDescripcion());
+                if(category.getDescription()!=null){
+                    existCategory.get().setDescription(category.getDescription());
                 }
                 
                 return repository.save(existCategory.get());
