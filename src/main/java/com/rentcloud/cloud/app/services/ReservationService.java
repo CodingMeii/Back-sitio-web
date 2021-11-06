@@ -6,7 +6,14 @@
 package com.rentcloud.cloud.app.services;
 
 import com.rentcloud.cloud.app.entities.Reservation;
+import com.rentcloud.cloud.app.entities.custom.CountClient;
+import com.rentcloud.cloud.app.entities.custom.CountCloud;
+import com.rentcloud.cloud.app.entities.custom.StatusAmount;
 import com.rentcloud.cloud.app.repositories.ReservationRepository;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,5 +108,40 @@ public class ReservationService {
             return true;
         }).orElse(false);
         return respuesta;
+    }
+    
+    public List<CountCloud> getTopCloud(){
+        return repository.getTopCloud();
+    }
+    
+    public List<CountClient> getTopClient(){
+        return repository.getTopClient();
+    }
+    
+    public List<Reservation> getReservationsPeriod(String fechaInicial, String fechaFinal){
+        SimpleDateFormat parse = new SimpleDateFormat("yyyy-mm-dd");
+        
+        Date fechaA = new Date();
+        Date fechaB = new Date();
+        
+        try{
+            fechaA = parse.parse(fechaInicial);
+            fechaB = parse.parse(fechaFinal);
+        }catch(ParseException e){
+            e.printStackTrace();
+        }
+        
+        if(fechaA.before(fechaB)){
+            return repository.getReservationPeriod(fechaA, fechaB);
+        }else {
+            return new ArrayList<>();
+        }
+    }
+    
+    public StatusAmount getReservationsStatusReport(){
+        List<Reservation> completed = repository.getReservationsByStatus("completed");
+        List<Reservation> cancelled = repository.getReservationsByStatus("cancelled");
+        
+        return new StatusAmount(completed.size(), cancelled.size());
     }
 }

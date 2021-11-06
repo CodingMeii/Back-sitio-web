@@ -6,6 +6,9 @@
 package com.rentcloud.cloud.app.controllers;
 
 import com.rentcloud.cloud.app.entities.Reservation;
+import com.rentcloud.cloud.app.entities.custom.CountClient;
+import com.rentcloud.cloud.app.entities.custom.CountCloud;
+import com.rentcloud.cloud.app.entities.custom.StatusAmount;
 import com.rentcloud.cloud.app.services.ReservationService;
 import java.util.List;
 import java.util.Optional;
@@ -83,5 +86,30 @@ public class ReservationController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public boolean delete(@PathVariable("id") int reservationId){
         return service.delete(reservationId);
+    }
+    @GetMapping("/report-cloud")
+    public List<CountCloud> getReservationsReportCloud(){
+        return service.getTopCloud();
+    }
+    
+    //lo mismo que con client
+    @GetMapping("/report-client")
+    public List<CountClient> gerReservationsReportClient() {
+        return service.getTopClient();
+    }
+    
+    @GetMapping("/report-dates/{fechaInicial}/{fechaFinal}")
+    public List<Reservation> getReservationsReportDates(@PathVariable("dateOne") String dateOne, @PathVariable("dateTwo") String dateTwo){
+        return service.getReservationsPeriod(dateOne, dateTwo);
+    }
+    
+    @GetMapping("/report-dates/amount/{startDate}/{devolutionDate}")
+    public Integer getReservationsReportDatesAmount(@PathVariable("dateOne") String dateOne, @PathVariable("dateTwo") String dateTwo){
+        return service.getReservationsPeriod(dateOne, dateTwo).size();
+    }
+    
+    @GetMapping("/report-status")
+    public StatusAmount getReservationsStatusReport(){
+        return service.getReservationsStatusReport();
     }
 }
