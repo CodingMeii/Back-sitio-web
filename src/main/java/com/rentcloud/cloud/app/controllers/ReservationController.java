@@ -87,13 +87,13 @@ public class ReservationController {
     public boolean delete(@PathVariable("id") int reservationId){
         return service.delete(reservationId);
     }
-    @GetMapping("/report-cloud")
+    @GetMapping("/report-clouds")
     public List<CountCloud> getReservationsReportCloud(){
         return service.getTopCloud();
     }
     
     //lo mismo que con client
-    @GetMapping("/report-client")
+    @GetMapping("/report-clients")
     public List<CountClient> gerReservationsReportClient() {
         return service.getTopClient();
     }
