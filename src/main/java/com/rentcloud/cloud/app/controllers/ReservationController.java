@@ -104,7 +104,7 @@ public class ReservationController {
     }
     
     @GetMapping("/report-dates/amount/{dateOne}/{dateTwo}")
-    public Integer getReservationsReportDatesAmount(@PathVariable("fechaInicial") String dateOne, @PathVariable("fechaFinal") String dateTwo){
+    public Integer getReservationsReportDatesAmount(@PathVariable("dateOne") String dateOne, @PathVariable("dateTwo") String dateTwo){
         return service.getReservationsPeriod(dateOne, dateTwo).size();
     }
     
