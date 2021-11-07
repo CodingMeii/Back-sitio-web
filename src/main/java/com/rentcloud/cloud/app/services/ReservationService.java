@@ -119,7 +119,7 @@ public class ReservationService {
     }
     
     public List<Reservation> getReservationsPeriod(String fechaInicial, String fechaFinal){
-        SimpleDateFormat parse = new SimpleDateFormat("yyyy-mm-dd");
+        SimpleDateFormat parse = new SimpleDateFormat("yyyy-MM-dd");
         
         Date fechaA = new Date();
         Date fechaB = new Date();
@@ -127,15 +127,15 @@ public class ReservationService {
         try{
             fechaA = parse.parse(fechaInicial);
             fechaB = parse.parse(fechaFinal);
+            
+            if(fechaA.before(fechaB)){
+                return repository.getReservationPeriod(fechaA, fechaB);
+            }
         }catch(ParseException e){
             e.printStackTrace();
         }
         
-        if(fechaA.before(fechaB)){
-            return repository.getReservationPeriod(fechaA, fechaB);
-        }else {
-            return new ArrayList<>();
-        }
+        return new ArrayList<>();
     }
     
     public StatusAmount getReservationsStatusReport(){

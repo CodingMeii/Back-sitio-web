@@ -98,12 +98,12 @@ public class ReservationController {
         return service.getTopClient();
     }
     
-    @GetMapping("/report-dates/{fechaInicial}/{fechaFinal}")
+    @GetMapping("/report-dates/{dateOne}/{dateTwo}")
     public List<Reservation> getReservationsReportDates(@PathVariable("dateOne") String dateOne, @PathVariable("dateTwo") String dateTwo){
         return service.getReservationsPeriod(dateOne, dateTwo);
     }
     
-    @GetMapping("/report-dates/amount/{fechaInicial}/{fechaFinal}")
+    @GetMapping("/report-dates/amount/{dateOne}/{dateTwo}")
     public Integer getReservationsReportDatesAmount(@PathVariable("fechaInicial") String dateOne, @PathVariable("fechaFinal") String dateTwo){
         return service.getReservationsPeriod(dateOne, dateTwo).size();
     }
